@@ -2,19 +2,21 @@ import { NextFunction, Request, Response } from "express";
 import authService from "../services/authService"
 import { successResponse } from "../utils/successResponse";
 import { STATUS_CODE } from "../utils/statusCode";
+import serverConfig from "../config/serverConfig";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { newUser, token } = await authService.registerUser(req.body);
-        
+
         res.cookie(
             "token",
             token,
             {
                 httpOnly: true,
-                secure: false,
-                sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 100
+                secure: serverConfig.NODE_ENV === "production" ? true : false,
+                sameSite: "lax",
+                path:"/api",
+                maxAge: 7 * 24 * 60 * 60 * 1000
             }
         );
 
@@ -27,15 +29,16 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { user, token } = await authService.loginUser(req.body);
-        
+
         res.cookie(
             "token",
             token,
             {
                 httpOnly: true,
-                secure: false,
-                sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 100
+                secure: serverConfig.NODE_ENV === "production" ? true : false,
+                sameSite: "lax",
+                path:"/api",
+                maxAge: 7 * 24 * 60 * 60 * 1000
             }
         );
 
