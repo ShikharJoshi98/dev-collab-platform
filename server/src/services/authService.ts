@@ -50,7 +50,18 @@ const loginUser = async (data: Pick<IUser, "email" | "password">) => {
     }
 }
 
+const getUserById = async (id: string) => {
+    try {
+        const user = await authRepository.fetchById(id);
+        return user;
+    } catch (error) {
+        console.log(error);
+        throw new AppError('Cannot find user', STATUS_CODE.INTERNAL_SERVER_ERROR);
+    }
+}
+
 export default {
     registerUser,
-    loginUser
+    loginUser,
+    getUserById
 }

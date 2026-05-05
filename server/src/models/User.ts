@@ -6,6 +6,9 @@ export interface IUser {
     name: string;
     email: string;
     password: string;
+    bio?: string,
+    skills?: string[],
+    gitHubUsername?: string
 }
 
 export interface IUserDocument extends IUser, Document {
@@ -26,6 +29,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         select: false
+    },
+    bio: {
+        type: String
+    },
+    skills: [{
+        type: String
+    }],
+    gitHubUsername: {
+        type: String
     }
 }, {
     timestamps: true
