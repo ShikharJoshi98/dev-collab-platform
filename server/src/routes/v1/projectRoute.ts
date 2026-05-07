@@ -17,4 +17,18 @@ router.get('/myProjects',
     projectController.getUserProjects
 )
 
+router.get('/fetch/:id',
+    projectController.getProject
+)
+
+router.patch('/update/:id',
+    protect,
+    projectController.updateProject
+)
+
+router.delete('/delete/:id',
+    protect,
+    projectController.deleteProject
+)
+
 export default router;

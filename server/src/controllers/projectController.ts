@@ -22,7 +22,37 @@ const getUserProjects = async (req: AuthRequest, res: Response, next: NextFuncti
     }
 }
 
+const getProject = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const project = await projectService.fetchProject(req.params.id as string);
+        successResponse(res, project, "Fetched Project successfully", STATUS_CODE.OK);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const updateProject = async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+        const project = await projectService.updateProject(req.user._id, req.params.id as string, req.body);
+        successResponse(res, project, "Updated Project successfully", STATUS_CODE.OK);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const deleteProject = async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+        const project = await projectService.destroyProject(req.user._id, req.params.id as string);
+        successResponse(res, project, "Deleted Project successfully", STATUS_CODE.OK);
+    } catch (error) {
+        next(error);
+    }
+}
+
 export default {
     create,
-    getUserProjects
+    getUserProjects,
+    getProject,
+    updateProject,
+    deleteProject
 }

@@ -11,6 +11,13 @@ class ProjectRepository extends CrudRepository<IProject>{
         });
         return response;
     }
+    async fetchProjectById(id: string) {
+        const response = await Project.findById(id).populate(
+            "user",
+            "name gitHubUsername"
+        );
+        return response;
+    }
 }
 
 export default ProjectRepository;
