@@ -15,6 +15,16 @@ const updateUser = async (id: string, data: IUser) => {
     }
 }
 
+const fetchUser = async (id:string) => {
+    try {
+        const user = await userRepository.fetchById(id);
+        return user;
+    } catch (error) {
+        console.log(error);
+        throw new AppError("Error updating user", STATUS_CODE.INTERNAL_SERVER_ERROR);
+    }
+}
+
 const fetchGithubRepos = async (username: string, page: number = 1) => {
     try {
         if (!username) {
@@ -50,5 +60,6 @@ const fetchGithubRepos = async (username: string, page: number = 1) => {
 
 export default {
     updateUser,
-    fetchGithubRepos
+    fetchGithubRepos,
+    fetchUser
 };

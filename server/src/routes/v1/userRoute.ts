@@ -9,6 +9,10 @@ router.get("/fetch",
     userController.getUser
 );
 
+router.get("/userProfile/:id",
+    userController.fetchUserProfile
+);
+
 router.patch("/update",
     protect,
     userController.update

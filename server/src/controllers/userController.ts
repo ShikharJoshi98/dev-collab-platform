@@ -26,6 +26,15 @@ const update = async (req: AuthRequest, res: Response, next: NextFunction) => {
     }
 }
 
+const fetchUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const user = await userService.fetchUser(req.params.id as string);
+        successResponse(res, user, "Fetched User Profile", STATUS_CODE.OK);
+    } catch (error) {
+        next(error);
+    }
+}
+
 const getRepos = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const page = req.query.page ? parseInt(req.query.page as string, 10) : 1;
@@ -39,5 +48,6 @@ const getRepos = async (req: Request, res: Response, next: NextFunction) => {
 export default {
     update,
     getUser,
-    getRepos
+    getRepos,
+    fetchUserProfile
 }
